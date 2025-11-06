@@ -1,35 +1,50 @@
-import React, { useState } from 'react';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { NavigationContainer } from "@react-navigation/native";
 
-import Homepage from './src/Homepage'; 
-import AddDishesPage from './src/AddDishesPage';
-import FilteredMenuPage from './src/FilteredMenuPage'; 
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 
-type RootStackParamList = {
-   Homepage: undefined
-    App: undefined;
-    AddDishesPage: { Dishname: string; DishDescription: string; DishPrice: number; };
-} 
 
-const Stack = createStackNavigator();
+import Homepage from './src/Homepage';
+import AddDishesPage from './src/AddDishesPage';  
+import FilteredMenuPage from './src/FilteredMenuPage';
+import { DishProvider } from './src/Globalstore';
+ 
 
-type AppScreenNavigationProp = StackNavigationProp<RootStackParamList, 'App'>; 
 
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-
   return (
-     <NavigationContainer >
-    <Stack.Navigator>
-      <Stack.Screen name='Homepage' component={Homepage}/>
-      <Stack.Screen name="AddDishesPage" component={AddDishesPage} />
-      <Stack.Screen name="FilteredMenuPage" component={FilteredMenuPage} />
-    </Stack.Navigator>
-  </NavigationContainer> 
-    ); 
-} 
+  <DishProvider>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+         tabBarIcon: ({ color, size }) => {
+          let iconName: string = 'help'; // default fallback icon 
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Add a Dish') { 
+            iconName = 'restaurant';
+          } else if (route.name === 'Filter Page') {
+            iconName = 'filter-outline';  
+          }
 
+            return <Ionicons name={iconName as any} size={size} color={color} />;
+          }, 
+ 
+
+          tabBarActiveTintColor: '#004aad',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+        <Tab.Screen name="Home" component={Homepage} />
+        <Tab.Screen name="Add Dishes" component={AddDishesPage} />
+        <Tab.Screen name="Filter Page" component={FilteredMenuPage} /> 
+      </Tab.Navigator>
+    </NavigationContainer>
+  </DishProvider> 
+  );
+}
 
 
    

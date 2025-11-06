@@ -58,25 +58,7 @@ const handleAdding = () => {
             </View>  
       
       
-              <TextInput
-                style={styles.input}
-                placeholder="Dish Name"
-                onChangeText={newText => setDishname(newText)}
-                keyboardType="default"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Dish Description"
-                onChangeText={newText => setDishDescription(newText)}
-                keyboardType="default"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Dish Price"
-                onChangeText={newText => setPrice(newText)}
-                keyboardType="numeric"
-              />
-              <Button title="Add to menu" onPress={handleAdding} />
+    
     <View> 
            
     </View>

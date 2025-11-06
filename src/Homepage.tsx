@@ -1,27 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'; 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Button, TextInput, Modal } from 'react-native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-
-
-
-type RootStackParamList = {
-   Homepage: undefined; 
-    App: undefined;
-    AddDishesPage: { Dishname: string; DishDescription: string; DishPrice: number; };
-  }
-
-    const Stack = createStackNavigator(); 
-
-  type HomepageScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Homepage'>;
-
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { useDishes } from './Globalstore';
 
 
 
 export default function Homepage ({ navigation }: { navigation: any }) {
 
-   const [Dishes, setDishes] = useState<Array<{name: string; description: string; price: number ;course:string}>>([]); 
-  
+  const {dishes, addDish} = useDishes();
+
     const [NewName, setNewName] = useState(''); 
     const [NewDescription, setNewDescription] = useState('');
     const [NewPrice, setNewPrice] = useState('');
@@ -38,9 +25,10 @@ export default function Homepage ({ navigation }: { navigation: any }) {
        setNewCourse(""); 
     }; 
   
-    const addDish = () => { 
+    const HandleAddDish = () => { 
       if (NewName && NewDescription && NewPrice) {
-        setDishes ([...Dishes, {name: NewName, description: NewDescription, price: parseFloat(NewPrice), course:NewCourse}]);
+         addDish({ name: NewName, description: NewDescription, price: parseFloat(NewPrice), course: NewCourse,});
+        
         setNewName(""); 
         setNewDescription("");
         setNewPrice("");
@@ -66,20 +54,13 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.WelcomeText}> Welcome, Christofell, let's plan together a well-balanced meal.</Text>
-  
-         <Button
-             title='Add a dish'
-             onPress={() => navigation.navigate('AddDishesPage')} 
-             color='#004aad'/>
-  
-          
-  
+
           <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Click down below to add the dishes</Text> 
   
           <TouchableOpacity style={styles.addDishButton} 
           onPress={() => setModalVisible(true)}>
             <Text style={styles.addDishButtonText}>Add Dish</Text>
-          </TouchableOpacity> 
+          </TouchableOpacity>  
   
           
           
@@ -137,7 +118,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
                     <Text style={styles.cancelButtonText}>Cancel</Text> 
   
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.addDishButton} onPress={addDish}>
+                  <TouchableOpacity style={styles.addDishButton} onPress={HandleAddDish}>
                     <Text style={styles.addDishButtonText}>Add Dish</Text>
                   </TouchableOpacity>
   
@@ -146,7 +127,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
             </View>
           </Modal>
   
-          {Dishes.map((dish, index) => {
+          {dishes.map((dish, index) => { 
     const isSelected = selectedDishes.some(d => d.name === dish.name);
     return (
       <TouchableOpacity
@@ -178,10 +159,6 @@ export default function Homepage ({ navigation }: { navigation: any }) {
         </View>  
          
          
-  
-  
-  
-  
           <StatusBar style="auto" />
       
       </ScrollView>
