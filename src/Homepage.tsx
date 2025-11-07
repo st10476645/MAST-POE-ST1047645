@@ -5,6 +5,10 @@ import { useDishes } from './Globalstore';
 
 
 
+// will put everything in the addDishPage when it will work 
+
+
+
 export default function Homepage ({ navigation }: { navigation: any }) {
 
   const {dishes, addDish} = useDishes();
