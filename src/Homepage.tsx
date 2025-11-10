@@ -7,35 +7,8 @@ import { useDishes } from './Globalstore';
 
 export default function Homepage ({ navigation }: { navigation: any }) {
 
-  const {dishes, addDish} = useDishes();
+  const {dishes, addDish, removeDish} = useDishes(); 
 
-    const [NewName, setNewName] = useState(''); 
-    const [NewDescription, setNewDescription] = useState('');
-    const [NewPrice, setNewPrice] = useState('');
-    const [NewCourse, setNewCourse] = useState('')
-  
-    // State to manage modal visibility.(false = pop up closed, true = pop up open)
-    const [modalVisible, setModalVisible] = React.useState(false); 
-  
-    const closeModal = () => {
-      setModalVisible(false);
-       setNewName("");
-       setNewDescription("");
-       setNewPrice("");
-       setNewCourse(""); 
-    }; 
-  
-    const HandleAddDish = () => { 
-      if (NewName && NewDescription && NewPrice) {
-         addDish({ name: NewName, description: NewDescription, price: parseFloat(NewPrice), course: NewCourse,});
-        
-        setNewName(""); 
-        setNewDescription("");
-        setNewPrice("");
-        setModalVisible(false);
-      }
-    }; 
-  
     const [selectedDishes, setSelectedDishes] = useState<Array<{name: String; description: String; price: number;}>>([]); // State to track selected dishes 
   
     //Function to toggle the dish selection
@@ -47,7 +20,8 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       setSelectedDishes(prev => [...prev, dish]);
     }
   };
-    const courses = ["Starters", "Main course", "Dessert"]; 
+    
+     
     
   return (
   
@@ -55,106 +29,41 @@ export default function Homepage ({ navigation }: { navigation: any }) {
         <View style={styles.container}>
           <Text style={styles.WelcomeText}> Welcome, Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal.</Text>
 
-          <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Click down below to add the dishes</Text> 
-  
-          <TouchableOpacity style={styles.addDishButton} 
-          onPress={() => setModalVisible(true)}>
-            <Text style={styles.addDishButtonText}>Add Dish</Text>
-          </TouchableOpacity>  
-  
-          
-          
-  
-          <Modal visible={modalVisible} onRequestClose={closeModal}>
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalContent}>
-                <Text style={styles.Title}> Add Dish Details</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setNewName}
-                  value={NewName}
-                  placeholder="Enter the dish name"
-                  />
-  
-                <TextInput 
-                style={styles.input}
-                onChangeText={setNewDescription}
-                value={NewDescription}
-                placeholder="Enter the dish description"
-                />
-  
-                <TextInput
-                style={styles.input}
-                onChangeText={setNewPrice}  
-                value={NewPrice}
-                placeholder="Enter the dish price"
-                keyboardType= "numeric" 
-                />
-  
-                <Text style={{fontWeight: 'bold', marginBottom: 10}}>Select course</Text>
-                <View style={styles.coursesButtonsContainer}>
-                  {courses.map((course) =>{ 
-                    const isSelected = NewCourse === course;
-                    return(
-                      <TouchableOpacity
-                      key={course}
-                      onPress={() => setNewCourse(course)}
-                      style={[
-                        styles.coursesButton, 
-                        isSelected && styles.courseButtonSelected
-                      ]}
-                      >
-                        <Text style={isSelected ? styles.coursesButtonTextSelected : styles.courseButtonText}>
-                          {course}
-                        </Text>
-                      </TouchableOpacity>
-                    )
-  
-                  })} 
-                </View>
-  
-                <View style={styles.modalButtons}>
-                  <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
-                    <Text style={styles.cancelButtonText}>Cancel</Text> 
-  
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.addDishButton} onPress={HandleAddDish}>
-                    <Text style={styles.addDishButtonText}>Add Dish</Text>
-                  </TouchableOpacity>
-  
-                </View>
-              </View>
-            </View>
-          </Modal>
-  
-          {dishes.map((dish, index) => { 
-    const isSelected = selectedDishes.some(d => d.name === dish.name);
-    return (
-      <TouchableOpacity
-        key={index}
-        onPress={() => toggleDishSelection(dish)}
-        style={[
-          styles.dishItem,
-          isSelected && styles.selectedDishItem
-        ]}
-      >
-        <Text style={styles.dishName}>🍽️ {dish.name}</Text> 
-        <Text style={styles.dishDescription}>{dish.description}</Text>
-        <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text> 
-        <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
-      </TouchableOpacity>
-    );
-  })}
-  
-  
-  <Text style={{ fontWeight: 'bold', marginTop: 20, padding:10 , paddingBottom: 30 }}>
-    Selected dishes: {selectedDishes.length}
-  </Text>
-   
-  
-         
-  
-  
+          <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Below the dishes that you added will be displayed </Text>
+
+          {dishes.length === 0 ? (
+  <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20 }}>No added dishes yet.</Text>) : ( 
+  <>
+    {dishes.map((dish, index) => {
+      const isSelected = selectedDishes.some(d => d.name === dish.name);
+      return (
+        <TouchableOpacity
+          key={index}
+          onPress={() => toggleDishSelection(dish)}
+          style={[
+            styles.dishItem,
+            isSelected && styles.selectedDishItem
+          ]}
+        >
+          <Text style={styles.dishName}>🍽️ {dish.name}</Text>
+          <Text style={styles.dishDescription}>{dish.description}</Text>
+          <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
+          <Text style={styles.dishCourse}>Course: {dish.course}</Text>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => removeDish(dish.name)}
+          >
+            <Text style={styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      );
+    })}
+
+    <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 10, paddingBottom: 30 }}>
+      Selected dishes: {selectedDishes.length}
+    </Text>
+  </>
+)} 
   
         </View>  
          
@@ -179,8 +88,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       textAlign: 'center', 
       padding: 30,
     }, 
-  
-  
+
     addDishButton: {
     backgroundColor: '#004aad', 
     paddingVertical: 12,
@@ -291,6 +199,8 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     fontWeight: '600',
     marginTop: 4,
   }, 
+  deleteButton: { marginTop: 10, backgroundColor: '#004aad', padding: 5, borderRadius: 5 },
+  deleteText: { color: 'white', textAlign: 'center' },
   // End of styling 
   
   

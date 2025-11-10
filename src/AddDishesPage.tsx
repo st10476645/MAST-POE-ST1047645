@@ -1,13 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'; 
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { useDishes } from './Globalstore';
 
-
-
 export default function Homepage ({ navigation }: { navigation: any }) {
 
   const {dishes, addDish} = useDishes();
+  const [ confirmationMessage, setconfirmationMessage ] = useState(false); 
 
     const [NewName, setNewName] = useState(''); 
     const [NewDescription, setNewDescription] = useState('');
@@ -33,6 +31,12 @@ export default function Homepage ({ navigation }: { navigation: any }) {
         setNewDescription("");
         setNewPrice("");
         setModalVisible(false);
+
+        setconfirmationMessage(true);
+        // Show confirmation popup
+  
+        // Hide it after 2 seconds
+       setTimeout(() => setconfirmationMessage(false), 2000);
       }
     }; 
   
@@ -51,7 +55,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     
   return (
   
-      <ScrollView>
+  <ScrollView>
         <View style={styles.container}>
 
           <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Click down below to add the dishes</Text> 
@@ -123,42 +127,26 @@ export default function Homepage ({ navigation }: { navigation: any }) {
               </View>
             </View>
           </Modal>
+          {confirmationMessage && (
+  <View style={styles.confirmationPopup}>
+    <Text style={styles.confirmationText}>✅ Dish added! Check it in the filter tab.</Text>
+  </View>
+)}
+
+
   
           {dishes.map((dish, index) => { 
     const isSelected = selectedDishes.some(d => d.name === dish.name);
     return (
-      <TouchableOpacity
-        key={index}
-        onPress={() => toggleDishSelection(dish)}
-        style={[
-          styles.dishItem,
-          isSelected && styles.selectedDishItem
-        ]}
-      >
-        <Text style={styles.dishName}>🍽️ {dish.name}</Text> 
-        <Text style={styles.dishDescription}>{dish.description}</Text>
-        <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text> 
-        <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
+      <TouchableOpacity>
+        <Text style={styles.Title}>🍽️ The dish was added! Take a look in the filter!</Text> 
+       
       </TouchableOpacity>
     );
   })}
   
-  
-  <Text style={{ fontWeight: 'bold', marginTop: 20, padding:10 , paddingBottom: 30 }}>
-    Selected dishes: {selectedDishes.length}
-  </Text>
-   
-  
-         
-  
-  
-  
-        </View>  
-         
-         
-          <StatusBar style="auto" />
-      
-      </ScrollView>
+   </View>  
+ </ScrollView>
     );
   }
   
@@ -289,7 +277,21 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     marginTop: 4,
   }, 
   // End of styling 
-  
+  confirmationPopup: {
+  position: 'absolute',
+  top: 50,
+  alignSelf: 'center',
+  backgroundColor: '#004aad',
+  padding: 15,
+  borderRadius: 8,
+  zIndex: 10,
+},
+confirmationText: {
+  color: 'white',
+  fontWeight: 'bold',
+  textAlign: 'center',
+},
+
   
   }
   );
