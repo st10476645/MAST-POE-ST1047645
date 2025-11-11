@@ -23,6 +23,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
 
   const averagePrice = selectedDishes.length > 0
   ? selectedDishes.reduce((sum, dish) => sum + dish.price, 0) / selectedDishes.length : 0;
+  //Calculations for the average price
 
     
   return (
@@ -32,40 +33,48 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     <View> 
       <Text style={styles.WelcomeText}> Welcome Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal!</Text>
       
-      {dishes.length === 0 ? (
+      {dishes.length === 0 ? ( // Those lines will be displayed as long as the user doesn't add a dish
         <>
         <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
           Below the dishes that you added will be displayed.
+        </Text>
+
+         <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
+          _________________________________________
         </Text>
         
         <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
           No dishes added yet.
         </Text>
         </>
-        ) : (
+        ) : ( // After he added 
         
         <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 25, textAlign: 'center', color: "#004aad"  }}>
           Your memu
         </Text>
       )} 
+       <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingBottom: 20 }}>
+         _________________________________________
+       </Text>
 
 
-        {dishes.map((dish, index) => {
+        {dishes.map((dish, index) => { 
           const isSelected = selectedDishes.some(d => d.name === dish.name);
           return (
           <TouchableOpacity
-          key={index}
-          onPress={() => toggleDishSelection(dish)}
-          style={[styles.dishItem,isSelected && styles.selectedDishItem ]}>
+            key={index}
+            onPress={() => toggleDishSelection(dish)}
+            style={[styles.dishItem,isSelected && styles.selectedDishItem ]}>
          
-          <Text style={styles.dishName}>🍽️ {dish.name}</Text>
-          <Text style={styles.dishDescription}>{dish.description}</Text>
-          <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
-          <Text style={styles.dishCourse}>Course: {dish.course}</Text>
-          
-         
-        </TouchableOpacity> );
+            <Text style={styles.dishName}>🍽️ {dish.name}</Text>
+            <Text style={styles.dishDescription}>{dish.description}</Text>
+            <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
+            <Text style={styles.dishCourse}>Course: {dish.course}</Text>
+         </TouchableOpacity> );
       })}
+       <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
+          _________________________________________
+        </Text>
       <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 115, paddingBottom: 15, fontSize: 18, textAlign: 'center' }}>
         Selected dishes: {selectedDishes.length}
         </Text>
@@ -104,16 +113,17 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     },
    // Styling for dish cards and it's components
     dishItem: {
-    padding: 15,
+    padding: 10,
     marginVertical: 8,
     backgroundColor: 'white',
     borderRadius: 10,
     width: '90%',
     alignSelf: 'center',
+    marginTop: 8,
   },
 
   selectedDishItem: {
-   backgroundColor:"#4682B4",  // or #CBC3E3 OR #E6E6FA OR #AFDBF5 or #4a6da7
+   backgroundColor:"#CBC3E3",  // or #CBC3E3 OR #E6E6FA OR #AFDBF5 or #4a6da7 or #4682B4
   }, 
 
   dishName: {

@@ -114,18 +114,26 @@ export default function Homepage ({ navigation }: { navigation: any }) {
           </View>
         </Modal>
 
+        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
+          _________________________________________
+        </Text> 
+
         {dishes.length === 0 ? ( 
                 <>
-                <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
+                <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
                   No dishes added yet.
                 </Text>
                 </>
                 ) : (
                 
-                <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 25, textAlign: 'center', color: "black"  }}>
+                <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 20, textAlign: 'center', color: "black"  }}>
                   Here's what you added so far!
                 </Text>
               )} 
+              
+             
+
+         
         
         {dishes.map((dish, index) => {
           const isSelected = selectedDishes.some(d => d.name === dish.name);
@@ -145,6 +153,9 @@ export default function Homepage ({ navigation }: { navigation: any }) {
               <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </TouchableOpacity>);})}
+          <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
+           _________________________________________
+           </Text>
   
     </View>  
   </ScrollView>
@@ -186,11 +197,11 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   },
   
   cancelButton: {
-     backgroundColor: '#004aad', 
+   backgroundColor: '#004aad', 
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 30,
   },
   
   cancelButtonText: { 
@@ -307,20 +318,6 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     fontWeight: 'bold',
    }, 
   // End of styling 
-  confirmationPopup: {
-  position: 'absolute',
-  top: 50,
-  alignSelf: 'center',
-  backgroundColor: '#004aad',
-  padding: 15,
-  borderRadius: 8,
-  zIndex: 10,
-},
-confirmationText: {
-  color: 'white',
-  fontWeight: 'bold',
-  textAlign: 'center',
-},
 }
 );
   

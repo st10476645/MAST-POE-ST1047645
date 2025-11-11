@@ -37,14 +37,14 @@ export default function FilteredMenuPage({ navigation }: { navigation: any }) {
             </TouchableOpacity>
             
             
-            {showFilters && (
+            {showFilters && ( 
               <View>
-                {["Starters","Main course","Dessert"].map(course => (
-                  <TouchableOpacity key={course} onPress={() => setActiveFilter(course)}>
+                {["Starters","Main course","Dessert"].map(course => ( // Goes through the course array after the user input
+                  <TouchableOpacity key={course} onPress={() => setActiveFilter(course)}> 
                     <Text style={[styles.filterstext,activeFilter === course && { fontWeight: 'bold', color: '#004aad'}]}>
                       {course}
                     </Text>
-                  </TouchableOpacity>))}
+                  </TouchableOpacity>))} 
                 </View>)}
           </View>
           {filterDishes.length === 0 ? (
@@ -97,30 +97,48 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#4a6da7",
     paddingBottom: 30,
+    borderRadius: 10,
   }, 
   filterstext: {
      color: 'black',
      textAlign: 'center', 
       backgroundColor: "#fff",
+      borderRadius: 5,
   }, 
   card: { 
-    padding:20, backgroundColor: 'white', marginBottom: 10, borderRadius: 8 , marginTop: 25,
+    padding: 15,
+    marginVertical: 8,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 35,
   },
  dishName: {
+    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
+    paddingBottom: 8,
   },
+
   dishDescription: {
     fontStyle: 'italic',
-    color: '#555',
+    color: 'black',
+    textAlign:'center', 
   },
   dishPrice: {
     color: '#333',
     marginTop: 4,
+    paddingBottom: 8,
+    textAlign: 'center',
+    fontWeight: 'bold', 
   },
+
   dishCourse: {
     color: '#004aad',
     fontWeight: '600',
     marginTop: 4,
-  }, 
+    paddingBottom: 8,
+    textAlign: 'center',
+  },  
 });
