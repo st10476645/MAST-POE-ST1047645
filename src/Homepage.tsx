@@ -113,7 +113,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   },
 
   selectedDishItem: {
-   backgroundColor:"#4682B4",  // or #CBC3E3 OR #E6E6FA OR #AFDBF5
+   backgroundColor:"#4682B4",  // or #CBC3E3 OR #E6E6FA OR #AFDBF5 or #4a6da7
   }, 
 
   dishName: {

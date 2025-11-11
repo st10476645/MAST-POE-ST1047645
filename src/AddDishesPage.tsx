@@ -113,6 +113,19 @@ export default function Homepage ({ navigation }: { navigation: any }) {
             </View>
           </View>
         </Modal>
+
+        {dishes.length === 0 ? ( 
+                <>
+                <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
+                  No dishes added yet.
+                </Text>
+                </>
+                ) : (
+                
+                <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 25, textAlign: 'center', color: "black"  }}>
+                  Here's what you added so far!
+                </Text>
+              )} 
         
         {dishes.map((dish, index) => {
           const isSelected = selectedDishes.some(d => d.name === dish.name);

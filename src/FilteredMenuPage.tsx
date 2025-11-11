@@ -96,13 +96,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     backgroundColor: "#4a6da7",
+    paddingBottom: 30,
   }, 
   filterstext: {
      color: 'black',
      textAlign: 'center', 
       backgroundColor: "#fff",
   }, 
-  card: { padding: 15, backgroundColor: '#f0f0f0', marginBottom: 10, borderRadius: 8 },
+  card: { 
+    padding:20, backgroundColor: 'white', marginBottom: 10, borderRadius: 8 , marginTop: 25,
+  },
  dishName: {
     fontWeight: 'bold',
     fontSize: 16,
