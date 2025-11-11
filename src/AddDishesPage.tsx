@@ -4,8 +4,7 @@ import { useDishes } from './Globalstore';
 
 export default function Homepage ({ navigation }: { navigation: any }) {
 
-  const {dishes,removeDish, addDish} = useDishes();
-  const [ confirmationMessage, setconfirmationMessage ] = useState(false); 
+  const {dishes,removeDish, addDish} = useDishes(); 
 
     const [NewName, setNewName] = useState(''); 
     const [NewDescription, setNewDescription] = useState('');
@@ -26,7 +25,6 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     const HandleAddDish = () => { 
       if (NewName && NewDescription && NewPrice) {
          addDish({ name: NewName, description: NewDescription, price: parseFloat(NewPrice), course: NewCourse,});
-        
         setNewName(""); 
         setNewDescription("");
         setNewPrice("");
@@ -34,18 +32,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
 
       }
     }; 
-  
-    const [selectedDishes, setSelectedDishes] = useState<Array<{name: String; description: String; price: number;}>>([]); // State to track selected dishes 
-  
-    //Function to toggle the dish selection
-    const toggleDishSelection = (dish: {name: string; description: string; price: number}) => { 
-    const isSelected = selectedDishes.some(d => d.name === dish.name); 
-    if (isSelected) {
-      setSelectedDishes(prev => prev.filter(d => d.name !== dish.name));
-    } else {
-      setSelectedDishes(prev => [...prev, dish]);
-    }
-  };
+
     const courses = ["Starters", "Main course", "Dessert"]; 
     
   return (
@@ -130,32 +117,24 @@ export default function Homepage ({ navigation }: { navigation: any }) {
                   Here's what you added so far!
                 </Text>
               )} 
-              
-             
 
-         
-        
-        {dishes.map((dish, index) => {
-          const isSelected = selectedDishes.some(d => d.name === dish.name);
-          return (
-          <TouchableOpacity
-           key={index}
-           onPress={() => toggleDishSelection(dish)}
-           style={[styles.dishItem,isSelected && styles.selectedDishItem]}>
-            
-            <Text style={styles.dishName}>🍽️ {dish.name}</Text>
-            <Text style={styles.dishDescription}>{dish.description}</Text>
-            <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
-            <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
-            <TouchableOpacity
-             style={styles.deleteButton}
-             onPress={() => removeDish(dish.name)}>
-              <Text style={styles.deleteText}>Delete</Text>
-            </TouchableOpacity>
-          </TouchableOpacity>);})}
+              {dishes.map((dish, index) => (
+                <View key={index} style={styles.dishItem}>
+                  <Text style={styles.dishName}>🍽️ {dish.name}</Text>
+                  <Text style={styles.dishDescription}>{dish.description}</Text>
+                  <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
+                  <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
+                  <TouchableOpacity
+                   style={styles.deleteButton}
+                   onPress={() => removeDish(dish.name)}>
+                    <Text style={styles.deleteText}>Delete</Text>
+                  </TouchableOpacity>
+                </View> 
+              ))}
+
           <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
            _________________________________________
-           </Text>
+          </Text>
   
     </View>  
   </ScrollView>
@@ -317,7 +296,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     textAlign: 'center',
     fontWeight: 'bold',
    }, 
-  // End of styling 
+ 
 }
 );
   

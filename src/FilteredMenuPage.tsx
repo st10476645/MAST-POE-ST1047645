@@ -17,7 +17,7 @@ export default function FilteredMenuPage({ navigation }: { navigation: any }) {
 
   const filterDishes = activeFilter
   ? dishes.filter(dish => dish.course === activeFilter)
-  : dishes;
+  : dishes; 
 
     return(
   <ScrollView 

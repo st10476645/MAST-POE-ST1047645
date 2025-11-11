@@ -7,7 +7,7 @@ import { useDishes } from './Globalstore';
 
 export default function Homepage ({ navigation }: { navigation: any }) {
 
-  const {dishes } = useDishes(); 
+  const {dishes } = useDishes(); // main array with the dishes
 
     const [selectedDishes, setSelectedDishes] = useState<Array<{name: String; description: String; price: number;}>>([]); // State to track selected dishes 
   
@@ -32,49 +32,40 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     contentContainerStyle={styles.container}>
     <View> 
       <Text style={styles.WelcomeText}> Welcome Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal!</Text>
-      
-      {dishes.length === 0 ? ( // Those lines will be displayed as long as the user doesn't add a dish
+
+       <Text style={styles.divider}>_________________________________________</Text>
+       
+       {dishes.length === 0 ? ( // this will be displayed as long there is no dish input
         <>
-        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
-          Below the dishes that you added will be displayed.
-        </Text>
-
-         <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
-          _________________________________________
-        </Text>
-        
-        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
-          No dishes added yet.
-        </Text>
+        <Text style={styles.infoText}>Below the dishes that you added will be displayed.</Text>
+        <Text style={styles.infoText}>No dishes added yet.</Text>
         </>
-        ) : ( // After he added 
-        
-        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 25, textAlign: 'center', color: "#004aad"  }}>
-          Your memu
-        </Text>
-      )} 
-       <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingBottom: 20 }}>
-         _________________________________________
-       </Text>
+        ) : ( // else 
+        <>
+        <Text style={styles.Title}>Your menu</Text>
 
+        {dishes.map((dish, index) => {
 
-        {dishes.map((dish, index) => { 
           const isSelected = selectedDishes.some(d => d.name === dish.name);
-          return (
-          <TouchableOpacity
-            key={index}
-            onPress={() => toggleDishSelection(dish)}
-            style={[styles.dishItem,isSelected && styles.selectedDishItem ]}>
-         
-            <Text style={styles.dishName}>🍽️ {dish.name}</Text>
-            <Text style={styles.dishDescription}>{dish.description}</Text>
-            <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
-            <Text style={styles.dishCourse}>Course: {dish.course}</Text>
-         </TouchableOpacity> );
-      })}
-       <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center', paddingTop: 30 }}>
-          _________________________________________
-        </Text>
+      return (
+        <TouchableOpacity // making the dishes card clickable for the selection function to work
+          key={index}
+          onPress={() => toggleDishSelection(dish)}
+          style={[styles.dishItem, isSelected && styles.selectedDishItem]}
+        >
+          <Text style={styles.dishName}>🍽️ {dish.name}</Text>
+          <Text style={styles.dishDescription}>{dish.description}</Text>
+          <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
+          <Text style={styles.dishCourse}>Course: {dish.course}</Text>
+        </TouchableOpacity>
+      );
+    })}
+  </>
+)}
+
+<Text style={styles.divider}>_________________________________________</Text>
+
+       
       <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 115, paddingBottom: 15, fontSize: 18, textAlign: 'center' }}>
         Selected dishes: {selectedDishes.length}
         </Text>
@@ -97,8 +88,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       paddingBottom: 30, 
       alignItems: 'center',
       justifyContent: 'center',
-    },
-   //backgroundColor: '#87CEEB' 
+    }, 
     WelcomeText: {
       fontSize: 20,
       fontWeight: 'bold',
@@ -106,12 +96,27 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       textAlign: 'center', 
       padding: 30,
     }, 
-    Title: {
-      fontSize: 25,
+     Title: {
+    fontSize: 24,
+    fontWeight:'bold',
+    padding: 20,
+    textAlign: 'center',
+    color: "#004aad",
+  }, 
+    divider: {
       fontWeight: 'bold',
-      padding: 15, 
+      fontSize: 18,
+      textAlign: 'center',
+      marginVertical: 20,
     },
-   // Styling for dish cards and it's components
+    infoText: {
+      fontSize: 18,
+      textAlign: 'center',
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+
+   // Styling for dish cards and its components
     dishItem: {
     padding: 10,
     marginVertical: 8,
@@ -122,11 +127,11 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     marginTop: 8,
   },
 
-  selectedDishItem: {
-   backgroundColor:"#CBC3E3",  // or #CBC3E3 OR #E6E6FA OR #AFDBF5 or #4a6da7 or #4682B4
+  selectedDishItem: { // effect when the dish gets selected
+   backgroundColor:"#CBC3E3",
   }, 
 
-  dishName: {
+  dishName: { // styling for the added dishes
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
@@ -152,13 +157,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     marginTop: 4,
     paddingBottom: 8,
     textAlign: 'center',
-  }, 
-
-  
-  
-  // End of styling 
-  
-  
+  },
   }
   );
   
