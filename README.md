@@ -35,7 +35,7 @@ https://youtube.com/shorts/AoIR6E3qTY0?si=xERhBStVgsMZf4fg
 
 # Change log 
 
-## First Design 
+# First Design 
 
 ![1](https://github.com/user-attachments/assets/199eeaf0-3ba6-42a7-bded-6b17ebb25ce3)
 
@@ -43,14 +43,14 @@ https://youtube.com/shorts/AoIR6E3qTY0?si=xERhBStVgsMZf4fg
 
 ![3](https://github.com/user-attachments/assets/0cefa0bd-a592-40ca-9d90-788b782a5599)
 
-## Part 2 Screenshots 
+# Part 2 Screenshots 
 
 <img width="783" height="1600" alt="image" src="https://github.com/user-attachments/assets/3e815d3e-f113-4955-9592-1447ca4300ed" />
 <img width="737" height="1600" alt="image" src="https://github.com/user-attachments/assets/8d48d39c-b7f8-4343-b1cf-a269642f0542" />
 <img width="746" height="1600" alt="image" src="https://github.com/user-attachments/assets/123017ef-b97b-4590-b02f-d90e0dd408e6" />
 <img width="744" height="1600" alt="image" src="https://github.com/user-attachments/assets/46770abb-6f37-4192-9b02-8f32ecace253" />
 
-## Part 3 Screenshots 
+# Part 3 Screenshots 
 
 <img width="748" height="1600" alt="image" src="https://github.com/user-attachments/assets/a97047c2-b2ec-48da-9346-d322af6a2ac4" />
 <img width="837" height="1599" alt="image" src="https://github.com/user-attachments/assets/d5203795-cf69-4ee0-8e34-bcbd575d3a01" />
